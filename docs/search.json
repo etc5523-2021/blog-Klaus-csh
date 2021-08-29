@@ -1,0 +1,20 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About this blog",
+      "description": "Some additional details about the blog",
+      "author": [],
+      "contents": "\r\n\r\n\r\n\r\n",
+      "last_modified": "2021-08-29T22:13:43+08:00"
+    },
+    {
+      "path": "index.html",
+      "title": "COVID 19 in Canada",
+      "author": [],
+      "contents": "\r\n\r\n\r\n\r\n",
+      "last_modified": "2021-08-29T22:14:23+08:00"
+    }
+  ],
+  "collections": ["posts/posts.json"]
+}

@@ -1,0 +1,5 @@
+---
+title: "COVID 19 in Canada"
+site: distill::distill_website
+listing: posts
+---
