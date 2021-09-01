@@ -1,126 +1,20 @@
 ---
-title: "COVID 19 in Canada"
+title: "Welcome"
 description: |
   This is an article about the situation of the new coronavirus in Canada
 author:
   - name: Shaohu Chen 
     url: https://example.com/norajones
-date: 08-29-2021
+date: 09-01-2021
 output:
   distill::distill_article:
     self_contained: false
 ---
 
-```{r setup, include=FALSE, message=FALSE, warning=FALSE}
-knitr::opts_chunk$set(echo = FALSE, 
-                      cache=TRUE, 
-                      message =FALSE, 
-                      warning=FALSE, 
-                      fig.align = 'center')
-library(tidyverse)
-library(readxl)
-library(DT)
-library(formattable)
-options(scipen=200)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
 
-data <- read_xls("data/owid-covid-data.xls")
-my_colors <- c("#05A4C0", "#85CEDA", "#D2A7D8", "#A67BC5", "#BB1C8B", "#8D266E")
-my_theme <- theme(plot.background = element_rect(fill = "grey98", color = "grey20"),
-                  panel.background = element_rect(fill = "grey98"),
-                  panel.grid.major = element_line(colour = "grey87"),
-                  text = element_text(color = "grey20"),
-                  plot.title = element_text(size = 22),
-                  plot.subtitle = element_text(size = 17),
-                  axis.title = element_text(size = 15),
-                  axis.text = element_text(size = 15),
-                  legend.box.background = element_rect(color = "grey20", fill = "grey98", size = 0.1),
-                  legend.box.margin = margin(t = 3, r = 3, b = 3, l = 3),
-                  legend.title = element_blank(),
-                  legend.text = element_text(size = 15),
-                  strip.text = element_text(size=17))
-```
-
-
-```{r}
-vaccination <- data %>% 
-  select(c(date, total_vaccinations:new_vaccinations_smoothed_per_million, -c(total_boosters_per_hundred,total_boosters))) %>% 
-  mutate(date = as.Date(date))
-
-case <- data %>% 
-  select(date:new_cases,reproduction_rate) 
-
-# vaccination_num <-vaccination %>% 
-#   pivot_longer(cols = total_vaccinations : people_fully_vaccinated,
-#                names_to = "vaccinations",
-#                values_to = "count")
-```
-
-
-```{r, fig.width=15, fig.height=7}
-case %>% pivot_longer(cols = total_cases:reproduction_rate,
-                      names_to = "infection",
-                      values_to = "count") %>% 
-  ggplot(aes(x = as.Date(date), y = count, color = infection )) +
-  geom_line(size = 1.5) +
-  facet_wrap(~infection,
-             scales = "free_y") +
-  theme_bw()+
-  geom_vline(xintercept = as.Date("2020-12-15"),  color = "darkgreen", 
-             linetype="dashed", size = 1) +
-  xlab("Date") +
-  scale_color_manual(values = my_colors) +
-    scale_linetype_manual(values=c("solid", "twodash", "dotted")) +
-    coord_cartesian(clip = 'off') +
-    scale_y_continuous(labels = scales::comma) +
-    my_theme + theme(axis.title.x = element_blank())+
-  theme(legend.position = "bottom")
-```
-
-```{r, fig.width=15, fig.height= 9}
-vaccination_num <- vaccination %>%
-    select(date, total_vaccinations, people_vaccinated,people_fully_vaccinated) %>%
-    gather(key = group_var, value = "Cases", -date, na.rm = TRUE) %>%
-    group_by(date, group_var) %>%
-    summarise(n = sum(Cases, na.rm = F), .groups = "drop_last") %>%
-    mutate(label = if_else(date == max(date), as.character(group_var), NA_character_)) 
-
-vaccination_num %>% ggplot(aes(x=date, y = n, color=group_var)) + 
-    geom_line(size = 1.5) +
-#     geom_label_repel(aes(label = label), nudge_x = 2, hjust=0, na.rm = TRUE, label.size = 0.1, size=3, segment.size = 0.1)
-    scale_color_manual(values = my_colors) +
-    scale_linetype_manual(values=c("solid", "twodash", "dotted")) +
-    coord_cartesian(clip = 'off') +
-    scale_y_continuous(labels = scales::comma) +
-    scale_x_date(date_breaks = "months" , date_labels = "%b-%y") +
-    my_theme + theme(axis.title.x = element_blank()) +
-    labs(title = "Reported vaccinations in Time", subtitle = "2021", y = "Frequency")
-```
-
-```{r, eval=FALSE}
-fit_stan <- lm(total_cases ~ total_cases + new_cases * reproduction_rate, data = case)
-library(broom)
-tidy.stanreg <- function(x, ...) {
-  est <- x$coefficients
-  tibble(term = names(est), 
-         estimate = unname(est),
-         std.error = x$ses)
-}
-tidy(fit_stan)
-
-DT::datatable(case, options = list(pageLength = 4))
-```
-
-```{r}
-vaccination_num %>% select(date : n) %>% 
-  filter(date > as.Date("2021-01-04")) %>% 
-  pivot_wider(names_from = group_var, 
-              values_from = n) %>% 
-  mutate(people_fully_vaccinated_percentage =(people_fully_vaccinated /
-                                                c(people_vaccinated- people_fully_vaccinated))) %>% 
-  mutate(people_fully_vaccinated_percentage = 
-           percent(people_fully_vaccinated_percentage)) %>% 
-    mutate_each(funs(prettyNum(., big.mark=",")))%>%  
-  DT::datatable(options = list(pageLength = 4)) 
+# Learn more about creating blogs with Distill at:
+# https://rstudio.github.io/distill/blog.html
 
 ```
-

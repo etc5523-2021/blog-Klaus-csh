@@ -1,0 +1,26 @@
+h1 {
+  color: #2E5550;
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    font-size: 34px;
+}
+
+
+
+body {background-color: #E3E2DF;
+}
+
+ .distill-site-nav  {
+  color: #FFFFFF;
+  background-color: #595859;
+  font-family:"Monospace", cursive, Sans-Serif ;
+   }
+
+.distill-site-header {
+  --title-size:       20px;                      
+  --text-color:       #FFFFFF;                   
+  --text-size:        20px;                      
+  --hover-color:      #383838;                   
+  --bkgd-color:       #D36060;          
+}
+

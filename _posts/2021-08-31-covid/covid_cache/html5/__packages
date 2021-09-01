@@ -9,7 +9,6 @@ dplyr
 stringr
 forcats
 readxl
-Rcpp
-rstanarm
 DT
 formattable
+gt
