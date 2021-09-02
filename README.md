@@ -8,9 +8,11 @@ The URL of this blog is [FILL].
 
 This assessment is due Fri Sep 3 2021 11.55PM AEST.
 
+My name is Shaohu Chen
+
 My selected country is Canada [FILL].
 
-The relevant blog post for this assessment is in [FILL].html
+The relevant blog post for this assessment is in https://etc5523-2021.github.io/blog-Klaus-csh/posts/2021-08-31-covid/ [FILL].html
 
 - [ ] Selected a country
 - [ ] Website with R markdown 

@@ -9,6 +9,7 @@ date: 08-31-2021
 output:
   distill::distill_article:
     self_contained: false
+
 ---
 
 ```{r setup, include=FALSE, message=FALSE, warning=FALSE}
@@ -49,6 +50,33 @@ vaccination <- data %>%
 
 case <- data %>% 
   select(date:new_cases,reproduction_rate) 
+
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+Variable <- c("date", "iso_a3", 
+             "currency_code", "name",
+             "local_price", "dollar_ex",
+             "dollar_price", "USD_raw",
+             "EUR_raw", "GBP_raw",
+             "JPY_raw","CNY_raw",
+             "GDP_dollar", "adj_price", 
+             "USD_adjusted", "EUR_adjusted", 
+             "GBP_adjusted", "JPY_adjusted", "CNY_adjusted")
+Description <- c("Date of observation", "Three-character ISO 3166-1 country code", 
+             "Three-character ISO 4217 currency code", "Country name",
+             "Price of a Big Mac in the local currency", "Local currency units per dollar",
+             "Price of a Big Mac in dollars", "Raw index, relative to the US dollar","Raw index, relative to the Euro",
+             "Raw index, relative to the British pound","Raw index, relative to the Japanese yen","Raw index, relative to the Chinese yuan",
+             "GDP per person, in dollars", "GDP-adjusted price of a Big Mac, in dollars", "Adjusted index, relative to the US dollar", "Adjusted index, relative to the Euro", "Adjusted index, relative to the British pound", "Adjusted index, relative to the Japanese yen", "Adjusted index, relative to the Chinese yuan")
+
+Type <- c("Date", "Character", "Character", "Character", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric"
+          , "Numeric", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric")
+Source <- c("","", "", "", "McDonalds; The Economist", "Thomson Reuters","", "", "", "","", "", "IMF", "","", "", "",  "", "")
+
+No. <- (1:length(Variable))
+data_dictionary <- data.frame(No., Variable, Description, Type, Source)
 
 ```
 
