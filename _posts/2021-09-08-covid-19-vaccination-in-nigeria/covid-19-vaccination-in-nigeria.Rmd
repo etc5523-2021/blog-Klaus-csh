@@ -1,0 +1,207 @@
+---
+title: "COVID-19 Vaccination in Nigeria"
+description: |
+  A short description of the post.
+author:
+  - name: Shaohu Chen
+    url: https://example.com/norajones
+date: 09-08-2021
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+theme: cosmo
+highlight: tango
+categories:
+  - Coronavirus
+  - Vaccination
+  - Nigeria
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(plotly)
+library(tidyverse)
+library(highcharter)
+library(lubridate)
+library(ggplot2)
+library(xtable)
+library(kableExtra)
+```
+
+## Introduction
+
+With the large-scale production of vaccines, many countries in the world are speeding up the vaccination process. However, some countries are unable to develop and produce vaccines by themselves due to lack of scientific research and technical support and funds, especially in poor countries. As one of the representatives, Nigeria is a country under the [Humanitarian Response Plan(HRP](https://www.humanitarianresponse.info/en/operations/nigeria/humanitarian-response-plan), which requires external support. As a journalist, in this blog post I will focus on the introduction through [Our World in Data](https://github.com/owid/covid-19-data/tree/master/public/data) about Nigeria’s vaccination situation, to help them gain more support from countries.
+
+## Data Description
+
+Two data sets are used in a brief overview of the COVID-19 situation in Nigeria, one on COVID-19 cases and vaccination, and the other on the number of vaccines obtained in Nigeria.
+
+### COVID-19 Confirmed cases, Death and Vaccination
+
+Because Nigeria’s data is partially missing, it mainly shows the number of confirmed cases, deaths, and the number of vaccinations.
+
+The following is the specific situation of the data.
+
+```{r}
+covid <- read.csv("data/owid-covid-data.csv") %>% 
+  select(c("location","date","total_cases","new_cases","new_cases_smoothed","total_deaths","new_deaths","new_deaths_smoothed","total_cases_per_million","new_cases_per_million","new_cases_smoothed_per_million","total_deaths_per_million","new_deaths_per_million","new_deaths_smoothed_per_million","reproduction_rate","total_vaccinations","people_vaccinated","people_fully_vaccinated","new_vaccinations","new_vaccinations_smoothed","total_vaccinations_per_hundred","people_vaccinated_per_hundred","people_fully_vaccinated_per_hundred","new_vaccinations_smoothed_per_million"))
+source<- read.csv("data/COVID-19 Vaccine Doses in HRP Countries - Deliveries.csv") %>% filter(f == "Nigeria") %>% select(!c('f', 'ISO3'))
+vaccination <-readr::read_csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv")%>%
+  filter(location == "Nigeria") 
+my_colors <- c("#05A4C0", "#85CEDA", "#D2A7D8", "#A67BC5", "#BB1C8B", "#8D266E")
+my_theme <- theme(plot.background = element_rect(fill = "grey98", color = "grey20"),
+                  panel.background = element_rect(fill = "grey98"),
+                  panel.grid.major = element_line(colour = "grey87"),
+                  text = element_text(color = "grey20"),
+                  plot.title = element_text(size = 22),
+                  plot.subtitle = element_text(size = 17),
+                  axis.title = element_text(size = 15),
+                  axis.text = element_text(size = 15),
+                  legend.box.background = element_rect(color = "grey20", fill = "grey98", size = 0.1),
+                  legend.box.margin = margin(t = 3, r = 3, b = 3, l = 3),
+                  legend.title = element_blank(),
+                  legend.text = element_text(size = 15),
+                  strip.text = element_text(size=17))
+```
+
+```{r}
+variables1 <- colnames(covid)
+description1 <- c("country","Date of Record", "Total confirmed cases of COVID-19", "New confirmed cases of COVID-19", "New confirmed cases of COVID-19 (7-day smoothed)","Total deaths attributed to COVID-19","New deaths attributed to COVID-19", "New deaths attributed to COVID-19 (7-day smoothed)", "Total confirmed cases of COVID-19 per 1,000,000 people","New confirmed cases of COVID-19 per 1,000,000 people","New confirmed cases of COVID-19 (7-day smoothed) per 1,000,000 people","Total deaths attributed to COVID-19 per 1,000,000 people","New deaths attributed to COVID-19 per 1,000,000 people","New deaths attributed to COVID-19 (7-day smoothed) per 1,000,000 people","Real-time estimate of the effective reproduction rate (R) of COVID-19","Total number of doses administered. For vaccines that require multiple doses, each individual dose is counted. If a person receives one dose of the vaccine, this metric goes up by 1. If they receive a second dose, it goes up by 1 again. If they receive a third/booster dose, it goes up by 1 again.", "total number of people who received at least one vaccine dose. If a person receives the first dose of a 2-dose vaccine, this metric goes up by 1. If they receive the second dose, the metric stays the same.", "Total number of people who received all doses prescribed by the vaccination protocol. If a person receives the first dose of a 2-dose vaccine, this metric stays the same. If they receive the second dose, the metric goes up by 1.", "Daily change in the total number of doses administered. It is only calculated for consecutive days. ","New doses administered per day (7-day smoothed). For countries that don't report data on a daily basis, we assume that doses changed equally on a daily basis over any periods in which no data was reported. This produces a complete series of daily figures, which is then averaged over a rolling 7-day window.", "`total_vaccinations` per 100 people in the total population of the country.","`people_vaccinated` per 100 people in the total population of the country.","`people_fully_vaccinated` per 100 people in the total population of the country.", "`daily_vaccinations` per 1,000,000 people in the total population of the country.")
+kable(cbind(variables1, description1),
+    col.names = c("Variables",
+                  "Description"),
+    caption = "**Data Description table for COVID-19 Confirmed cases, Death and Vaccination**") %>%
+  kable_styling(fixed_thead = T) %>% 
+  kable_paper("striped") %>%
+  row_spec(0, bold = T, color = "#f3ac50", background = "#2596be", align = "c") %>%
+  column_spec(2, italic = T) %>% 
+  scroll_box(height = "200px")
+```
+
+### Vaccine Source 
+
+The following table contains the data descriptions for the vaccine source:
+
+```{r description}
+variables2 <- colnames(source)
+description2 <- c("The vaccine pipeline through which the vaccine was delivered. Either COVAX or Other.", "The common name of the vaccine delivered", "The name of the funder that funded the procurement of the vaccine. 'Procured' is used where a country purchased the vaccines using their own funds.", "The number of doses delivered", "The URL of the source article where information about the delivery was published","Combination of pipeline and Funder", "The date when the vaccine delivery was reported")
+
+kable(cbind(variables2, description2),
+    col.names = c("Variables",
+                  "Description"),
+    caption = "**Data Description table for vaccine source**") %>%
+  kable_styling(fixed_thead = T) %>% 
+  kable_paper("striped") %>%
+  row_spec(0, bold = T, color = "#f3ac50", background = "#2596be", align = "c") %>%
+  column_spec(2, italic = T)
+```
+
+
+## Information on a global scale {.tabset .tabset-fade .tabset-pills} 
+
+### Percentage of the vaccinated population
+
+```{r echo=F}
+
+# Organizaztion total_vaccinations_per_hundred by country
+df_2_map <- covid %>%
+              select(total_vaccinations_per_hundred, location) %>%
+              group_by(location) %>% 
+              slice(which.max(total_vaccinations_per_hundred))
+
+highchart() %>%
+  hc_add_series_map(
+    worldgeojson, df_2_map, value = "total_vaccinations_per_hundred", joinBy = c('name','location'),
+    name = "Percentage of the vaccinated population"
+    )  %>% 
+  hc_colorAxis(stops = color_stops(n = 10, colors = c("#440154", "#21908C", "#FDE725"))) %>% 
+  hc_title(text = "Percentage of the vaccinated population by country") %>% 
+  hc_subtitle(text = "") %>%
+  hc_add_theme(hc_theme_google()) %>%
+  hc_tooltip(borderColor = "black",
+             valueSuffix = "%",
+             borderWidth = 0,
+             style = list(fontSize = "14px", textOutline = "0.3px #404040")) 
+
+```
+
+### Percentage of the population fully vaccinated
+
+```{r echo=F, fig.width=10}
+
+# Organizaztion people_fully_vaccinated_per_hundred by country
+df_3_map <- covid %>%
+              select(people_fully_vaccinated_per_hundred, location) %>%
+              group_by(location) %>% 
+              slice(which.max(people_fully_vaccinated_per_hundred))
+
+
+ highchart() %>%
+  hc_add_series_map(
+    worldgeojson, df_3_map, value = "people_fully_vaccinated_per_hundred", joinBy = c('name','location'),
+    name = "Percentage of the population fully vaccinated"
+    )  %>% 
+  hc_colorAxis(stops = color_stops()) %>% 
+  hc_title(text = "Percentage of the population fully vaccinated by country") %>% 
+  hc_subtitle(text = "") %>%
+  hc_add_theme(hc_theme_google()) %>%
+  hc_tooltip(borderColor = "black",
+             valueSuffix = "%",
+             borderWidth = 0,
+             style = list(fontSize = "14px", textOutline = "0.3px #404040"))
+
+```
+
+
+```{r vaccines, tab.cap='Sources of Vaccines received by Nigeria and their quantities'}
+source %>% select(!c(Source.Url, NewPipeline, Date))%>%
+  mutate(Doses = as.numeric(gsub(",", "", Doses)))%>%
+  arrange(Vaccine)%>%
+  kable()%>%kable_styling(fixed_thead = T,full_width = F, position = "center") %>% 
+  kable_paper(c("striped", "hover")) %>%
+  row_spec(0, bold = T, color = "#f3ac50", background = "#2596be", align = "c")
+```
+
+## Information on a global scale 
+
+```{r, fig.width=8, fig.height=3}
+ covid %>%
+  filter(location == "Nigeria") %>% 
+  select(date, new_cases,new_deaths)%>% 
+  pivot_longer(cols = new_cases:new_deaths,
+                      names_to = "infection",
+                      values_to = "count")%>% 
+  ggplot(aes(x = as.Date(date), y = count, color = infection )) +
+  geom_line(size = 1) +
+  facet_wrap(~infection,
+             scales = "free_y") +
+  theme_bw()+
+  xlab("Date") +
+  scale_color_manual(values = my_colors) +
+    scale_linetype_manual(values=c("solid", "twodash")) +
+    coord_cartesian(clip = 'off') +
+    scale_y_continuous(labels = scales::comma) +
+    my_theme + theme(axis.title.x = element_blank(),legend.position = "none") +
+  labs(title = "Reported Cases in Time", subtitle = "2021", y = "Frequency")
+
+p2 <- vaccination %>% 
+  ggplot(aes(x = date, y = daily_vaccinations, color = "daily_vaccinations"))+ geom_line(na.rm= TRUE,size = 1.5)+
+  labs(x = "Date", y = "Daily Vaccinations", title = "Daily vaccination from March to August")+ 
+    geom_line(size = 1.5) +
+    scale_color_manual(values = my_colors) +
+    scale_linetype_manual(values=c("solid", "twodash")) +
+    coord_cartesian(clip = 'off') +
+    scale_y_continuous(labels = scales::comma) +
+    scale_x_date(date_breaks = "months" , date_labels = "%b-%y") +
+    my_theme + theme(axis.title.x = element_blank(),legend.position = "none") +
+    labs(title = "Reported vaccinations in Time", subtitle = "2021", y = "Frequency")
+ggplotly(p2)
+```
+
+
+
+
+
+

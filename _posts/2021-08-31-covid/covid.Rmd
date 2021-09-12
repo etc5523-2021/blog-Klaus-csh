@@ -54,32 +54,6 @@ case <- data %>%
 ```
 
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-Variable <- c("date", "iso_a3", 
-             "currency_code", "name",
-             "local_price", "dollar_ex",
-             "dollar_price", "USD_raw",
-             "EUR_raw", "GBP_raw",
-             "JPY_raw","CNY_raw",
-             "GDP_dollar", "adj_price", 
-             "USD_adjusted", "EUR_adjusted", 
-             "GBP_adjusted", "JPY_adjusted", "CNY_adjusted")
-Description <- c("Date of observation", "Three-character ISO 3166-1 country code", 
-             "Three-character ISO 4217 currency code", "Country name",
-             "Price of a Big Mac in the local currency", "Local currency units per dollar",
-             "Price of a Big Mac in dollars", "Raw index, relative to the US dollar","Raw index, relative to the Euro",
-             "Raw index, relative to the British pound","Raw index, relative to the Japanese yen","Raw index, relative to the Chinese yuan",
-             "GDP per person, in dollars", "GDP-adjusted price of a Big Mac, in dollars", "Adjusted index, relative to the US dollar", "Adjusted index, relative to the Euro", "Adjusted index, relative to the British pound", "Adjusted index, relative to the Japanese yen", "Adjusted index, relative to the Chinese yuan")
-
-Type <- c("Date", "Character", "Character", "Character", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric"
-          , "Numeric", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric", "Numeric")
-Source <- c("","", "", "", "McDonalds; The Economist", "Thomson Reuters","", "", "", "","", "", "IMF", "","", "", "",  "", "")
-
-No. <- (1:length(Variable))
-data_dictionary <- data.frame(No., Variable, Description, Type, Source)
-
-```
-
 ## My first experiences in Canada
 
 I went to Canada a few years ago and spent the New Year there. I remember that I carried a piece of coal according to the custom and put the coal into the stove by myself as a gift to celebrate the new year. At the same time, I also said a blessing: "I wish the coal in your home will continue to burn forever." I will never forget that night. Canadians are hospitable, reserved and clear, sincere to others, and like modern art. They love ice and snow sports, and they regard Maple Leaf as a national treasure and the pride of the motherland. Canadians are known as "people who never get angry." The emergence of the new type of coronavirus has brought a nightmare to the whole world, and it has also shrouded a dark cloud over this simple country. At that time, the emergence of vaccines quickly brought dawn to this country. At that time, the epidemic in Canada was repeated. As a data analyst, I wanted to find out what caused this situation. Data is collected from [Our World in Data](https://ourworldindata.org/covid-vaccinations?country=CAN).
