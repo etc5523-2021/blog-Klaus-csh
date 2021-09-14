@@ -1,25 +1,17 @@
 {
   "articles": [
     {
-      "path": "about.html",
-      "title": "About this blog",
-      "description": "Some additional details about the blog",
-      "author": [],
-      "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2021-09-07T18:59:44+08:00"
-    },
-    {
       "path": "index.html",
-      "title": "COVID 19 in Canada",
+      "title": "COVID 19",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2021-09-07T18:59:45+08:00"
+      "last_modified": "2021-09-14T10:42:24+08:00"
     },
     {
       "path": "README.html",
       "author": [],
       "contents": "\r\nMy Blog\r\nThis is the blog of [FILL]. The URL of this blog is https://etc5523-2021.github.io/blog-Klaus-csh/posts/2021-08-31-covid/ [FILL].\r\nBlog Post 1\r\nThis assessment is due Fri Sep 3 2021 11.55PM AEST.\r\nMy selected country is Canada [FILL].\r\nThe relevant blog post for this assessment is in [FILL].html\r\n\r\nSelected a country\r\n\r\nWebsite with R markdown\r\n\r\nA working URL\r\n\r\nData description\r\n\r\nShort data story\r\n\r\nTable 1\r\n\r\nTable 2\r\n\r\nCustomised website with CSS\r\n\r\nSubmitted the entire blog to Moodle\r\nBlog Post 2\r\nThis assessment is due Fri Sep 17 2021 11.55PM AEST.\r\nMy selected country is [FILL].\r\nThe relevant blog post for this assessment is in [FILL].html\r\n\r\nSelected a new country\r\n\r\nData Story 1\r\n\r\nData Story 2\r\n\r\nGraph 1\r\n\r\nGraph 2\r\n\r\nSubmitted the entire blog to Moodle\r\n",
-      "last_modified": "2021-09-07T18:59:45+08:00"
+      "last_modified": "2021-09-14T10:42:25+08:00"
     }
   ],
   "collections": ["posts/posts.json"]

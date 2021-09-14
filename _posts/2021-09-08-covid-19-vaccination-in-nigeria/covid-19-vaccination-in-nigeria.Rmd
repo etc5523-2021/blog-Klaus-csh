@@ -1,11 +1,11 @@
 ---
 title: "COVID-19 Vaccination in Nigeria"
 description: |
-  A short description of the post.
+  Vaccines are urgent for Nigeria.
 author:
   - name: Shaohu Chen
     url: https://example.com/norajones
-date: 09-08-2021
+date: 08-30-2021
 output:
   distill::distill_article:
     self_contained: false
@@ -16,6 +16,7 @@ categories:
   - Coronavirus
   - Vaccination
   - Nigeria
+bibliography: references.bib
 ---
 
 
@@ -24,15 +25,17 @@ knitr::opts_chunk$set(echo = FALSE)
 library(plotly)
 library(tidyverse)
 library(highcharter)
-library(lubridate)
 library(ggplot2)
-library(xtable)
 library(kableExtra)
 ```
 
 ## Introduction
 
-With the large-scale production of vaccines, many countries in the world are speeding up the vaccination process. However, some countries are unable to develop and produce vaccines by themselves due to lack of scientific research and technical support and funds, especially in poor countries. As one of the representatives, Nigeria is a country under the [Humanitarian Response Plan(HRP](https://www.humanitarianresponse.info/en/operations/nigeria/humanitarian-response-plan), which requires external support. As a journalist, in this blog post I will focus on the introduction through [Our World in Data](https://github.com/owid/covid-19-data/tree/master/public/data) about Nigeria’s vaccination situation, to help them gain more support from countries.
+With the large-scale production of vaccines, many countries in the world are speeding up the vaccination process. However, some countries are unable to develop and produce vaccines by themselves due to lack of scientific research and technical support and funds, especially in poor countries. As one of the representatives, Nigeria is a country under the [Humanitarian Response Plan(HRP)](https://www.humanitarianresponse.info/en/operations/nigeria/humanitarian-response-plan), which requires external support. As a journalist, in this blog post I will focus on the introduction through [Our World in Data](https://github.com/owid/covid-19-data/tree/master/public/data) about Nigeria’s vaccination situation, to help them gain more support from countries.
+
+```{r, out.width = "50%"}
+knitr::include_graphics("images/C-virus-1280x720.jpg")
+```
 
 ## Data Description
 
@@ -75,7 +78,7 @@ kable(cbind(variables1, description1),
     caption = "**Data Description table for COVID-19 Confirmed cases, Death and Vaccination**") %>%
   kable_styling(fixed_thead = T) %>% 
   kable_paper("striped") %>%
-  row_spec(0, bold = T, color = "#f3ac50", background = "#2596be", align = "c") %>%
+  row_spec(0, bold = T, color = "#85CEDA", background = my_colors, align = "c") %>%
   column_spec(2, italic = T) %>% 
   scroll_box(height = "200px")
 ```
@@ -94,7 +97,7 @@ kable(cbind(variables2, description2),
     caption = "**Data Description table for vaccine source**") %>%
   kable_styling(fixed_thead = T) %>% 
   kable_paper("striped") %>%
-  row_spec(0, bold = T, color = "#f3ac50", background = "#2596be", align = "c") %>%
+  row_spec(0, bold = T, color ="#85CEDA", background = my_colors, align = "c") %>%
   column_spec(2, italic = T)
 ```
 
@@ -154,6 +157,9 @@ df_3_map <- covid %>%
 
 ```
 
+As of September 3, 2021, the percentage of Nigerian vaccinated population is 2.37%, and the percentage of fully vaccinated population is 0.73%, which is much lower than the world average of [30.3%](https://ourworldindata.org/covid-vaccinations?country=OWID_WRL). It can be seen from the map that the vaccination rate is very low throughout Africa.
+
+### Source of vaccines
 
 ```{r vaccines, tab.cap='Sources of Vaccines received by Nigeria and their quantities'}
 source %>% select(!c(Source.Url, NewPipeline, Date))%>%
@@ -161,13 +167,17 @@ source %>% select(!c(Source.Url, NewPipeline, Date))%>%
   arrange(Vaccine)%>%
   kable()%>%kable_styling(fixed_thead = T,full_width = F, position = "center") %>% 
   kable_paper(c("striped", "hover")) %>%
-  row_spec(0, bold = T, color = "#f3ac50", background = "#2596be", align = "c")
+  row_spec(0, bold = T,color ="#85CEDA", background = my_colors, align = "c")
 ```
 
-## Information on a global scale 
+As shown in the table above, almost all vaccines received in Nigeria come from other countries. The government purchased 300,000 doses of AstraZeneca, but for Nigeria, which has a large population, the number of vaccines does not meet the basic requirements.
 
-```{r, fig.width=8, fig.height=3}
- covid %>%
+## The impact of vaccines on the epidemic
+
+### Situtation on new cases and new deadths
+
+```{r cases, fig.width=8, fig.height=3,fig.cap="Specific changes in new cases and new deaths in Nigeria"}
+covid %>%
   filter(location == "Nigeria") %>% 
   select(date, new_cases,new_deaths)%>% 
   pivot_longer(cols = new_cases:new_deaths,
@@ -185,11 +195,14 @@ source %>% select(!c(Source.Url, NewPipeline, Date))%>%
     scale_y_continuous(labels = scales::comma) +
     my_theme + theme(axis.title.x = element_blank(),legend.position = "none") +
   labs(title = "Reported Cases in Time", subtitle = "2021", y = "Frequency")
+```
 
+### Situtation on vaccines
+
+```{r vaccinations, fig.width=8, fig.height=3,fig.cap="Changes in the number of vaccines"}
 p2 <- vaccination %>% 
   ggplot(aes(x = date, y = daily_vaccinations, color = "daily_vaccinations"))+ geom_line(na.rm= TRUE,size = 1.5)+
-  labs(x = "Date", y = "Daily Vaccinations", title = "Daily vaccination from March to August")+ 
-    geom_line(size = 1.5) +
+  labs(x = "Date", y = "Daily Vaccinations", title = "Daily vaccination from March to August") +
     scale_color_manual(values = my_colors) +
     scale_linetype_manual(values=c("solid", "twodash")) +
     coord_cartesian(clip = 'off') +
@@ -200,8 +213,45 @@ p2 <- vaccination %>%
 ggplotly(p2)
 ```
 
+According to the number of new cases and the number of deaths from Figures \@ref(fig:cases), it can be seen that the number has dropped significantly after the start of vaccination in March 2021 (Figure \@ref(fig:vaccinations)). The rise in July and August was also due to the shortage of vaccines, but after the vaccines continued to be supplied, their numbers fell again.
+
+### Situtation on reproduce rate
+
+```{r reproduce, fig.width=8, fig.height=3, fig.cap="The fluctuation of reproduce rate in Nigeria"}
+ rate <- covid %>%
+  filter(location == "Nigeria") %>% 
+  select(date,reproduction_rate) %>% 
+  na.omit() %>% 
+  mutate(reproduction_rate2 = c(reproduction_rate[2:length(reproduction_rate)],0),
+         diff_rate = reproduction_rate - 1.25,
+         date = as.Date(date),
+         month=format(date,"%Y-%m")) %>%
+  filter(date < "2021-09-04") %>% 
+  ggplot(aes(x = date,
+             y = diff_rate))+
+  geom_col(aes(fill = factor(sign(diff_rate))))+
+  theme_minimal()+
+  theme(panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    strip.text = element_text(face = "bold"))+
+  labs(title = "Trend of reproduce rate ",
+    fill = "Trend of rate")+
+  scale_fill_manual(values = my_colors)+
+  theme_bw()+
+ theme(legend.position = "none")
+
+ggplotly(rate)
 
 
+```
+
+The reproduce rate is compared with the initial data (Figure \@ref(fig:reproduce) . It can be seen that from the control of the epidemic to the beginning of the vaccination, these measures have led to a decline in the infection rate. However, due to the limited number of vaccines, and the mutation of the virus, the vaccine effect has been reduced, resulting in no significant drop in the infection rate.
 
 
+## Conclusion
+
+As a front reporter, I hope to report the real situation in Nigeria so that the world can focus more on this barren country, and hope that other powerful countries can help these countries more. The elimination of the epidemic does not depend on how quickly the powerful countries can control the epidemic, but on how quickly these weak countries can overcome the difficulties (@liang2020handbook). I hope that major countries can provide these countries with more economic, technological, and material support.
+
+
+*R packages used for the analysis are: @plotly, @tidyverse, @highcharter, @ggplot2, @kableExtra*
 

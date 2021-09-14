@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>COVID 19 in Canada</title>
+    <link>git@github.com:etc5523-2021/blog-Klaus-csh.git</link>
+    <atom:link href="git@github.com:etc5523-2021/blog-Klaus-csh.git/index.xml" rel="self" type="application/rss+xml"/>
+    <description>COVID 19 in Canada
+</description>
+    <generator>Distill</generator>
+    <lastBuildDate>Tue, 31 Aug 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Welcome</title>
+      <dc:creator>Shaohu Chen</dc:creator>
+      <link>git@github.com:etc5523-2021/blog-Klaus-csh.git/posts/welcome</link>
+      <description>This is an article about the situation of the new coronavirus in different countries</description>
+      <guid>git@github.com:etc5523-2021/blog-Klaus-csh.git/posts/welcome</guid>
+      <pubDate>Tue, 31 Aug 2021 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>COVID-19 Vaccination in Canada</title>
+      <dc:creator>Shaohu Chen</dc:creator>
+      <link>git@github.com:etc5523-2021/blog-Klaus-csh.git/posts/2021-08-31-covid</link>
+      <description>The impact of the vaccine on the number of people infected.</description>
+      <category>Coronavirus</category>
+      <category>Vaccination</category>
+      <category>Canada</category>
+      <guid>git@github.com:etc5523-2021/blog-Klaus-csh.git/posts/2021-08-31-covid</guid>
+      <pubDate>Tue, 31 Aug 2021 00:00:00 +0000</pubDate>
+      <media:content url="git@github.com:etc5523-2021/blog-Klaus-csh.git/posts/2021-08-31-covid/images/canada_newyear.jpg" medium="image" type="image/jpeg"/>
+    </item>
+    <item>
+      <title>COVID-19 Vaccination in Nigeria</title>
+      <dc:creator>Shaohu Chen</dc:creator>
+      <link>git@github.com:etc5523-2021/blog-Klaus-csh.git/posts/2021-09-08-covid-19-vaccination-in-nigeria</link>
+      <description>Vaccines are urgent for Nigeria.</description>
+      <category>Coronavirus</category>
+      <category>Vaccination</category>
+      <category>Nigeria</category>
+      <guid>git@github.com:etc5523-2021/blog-Klaus-csh.git/posts/2021-09-08-covid-19-vaccination-in-nigeria</guid>
+      <pubDate>Mon, 30 Aug 2021 00:00:00 +0000</pubDate>
+      <media:content url="git@github.com:etc5523-2021/blog-Klaus-csh.git/posts/2021-09-08-covid-19-vaccination-in-nigeria/images/C-virus-1280x720.jpg" medium="image" type="image/jpeg"/>
+    </item>
+  </channel>
+</rss>

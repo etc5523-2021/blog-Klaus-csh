@@ -1,7 +1,7 @@
 ---
 title: "Welcome"
 description: |
-  This is an article about the situation of the new coronavirus in Canada
+  This is an article about the situation of the new coronavirus in different countries
 author:
   - name: Shaohu Chen 
     url: https://example.com/norajones
