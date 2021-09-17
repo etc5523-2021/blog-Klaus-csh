@@ -7,14 +7,14 @@
     <description>COVID 19 in Canada
 </description>
     <generator>Distill</generator>
-    <lastBuildDate>Tue, 31 Aug 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate>
     <item>
       <title>Welcome</title>
       <dc:creator>Shaohu Chen</dc:creator>
       <link>git@github.com:etc5523-2021/blog-Klaus-csh.git/posts/welcome</link>
       <description>This is an article about the situation of the new coronavirus in different countries</description>
       <guid>git@github.com:etc5523-2021/blog-Klaus-csh.git/posts/welcome</guid>
-      <pubDate>Tue, 31 Aug 2021 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
     </item>
     <item>
       <title>COVID-19 Vaccination in Canada</title>
@@ -38,7 +38,6 @@
       <category>Nigeria</category>
       <guid>git@github.com:etc5523-2021/blog-Klaus-csh.git/posts/2021-09-08-covid-19-vaccination-in-nigeria</guid>
       <pubDate>Mon, 30 Aug 2021 00:00:00 +0000</pubDate>
-      <media:content url="git@github.com:etc5523-2021/blog-Klaus-csh.git/posts/2021-09-08-covid-19-vaccination-in-nigeria/images/C-virus-1280x720.jpg" medium="image" type="image/jpeg"/>
     </item>
   </channel>
 </rss>

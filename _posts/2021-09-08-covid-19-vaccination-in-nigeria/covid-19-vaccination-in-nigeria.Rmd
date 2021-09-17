@@ -20,6 +20,15 @@ bibliography: references.bib
 ---
 
 
+```{css, echo = FALSE}
+.d-title {
+  background-image: url(https://igamingbusiness.com/wp-content/uploads/2020/08/pxfuel.com168.jpg);
+  width: 100%;
+  height: 300px;
+  filter: brightness(85%);
+}
+```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(plotly)
@@ -27,17 +36,18 @@ library(tidyverse)
 library(highcharter)
 library(ggplot2)
 library(kableExtra)
+library(gganimate)
 ```
 
-## Introduction
+## 💡 Introduction 
 
 With the large-scale production of vaccines, many countries in the world are speeding up the vaccination process. However, some countries are unable to develop and produce vaccines by themselves due to lack of scientific research and technical support and funds, especially in poor countries. As one of the representatives, Nigeria is a country under the [Humanitarian Response Plan(HRP)](https://www.humanitarianresponse.info/en/operations/nigeria/humanitarian-response-plan), which requires external support. As a journalist, in this blog post I will focus on the introduction through [Our World in Data](https://github.com/owid/covid-19-data/tree/master/public/data) about Nigeria’s vaccination situation, to help them gain more support from countries.
 
-```{r, out.width = "50%"}
+```{r, out.width = "100%"}
 knitr::include_graphics("images/C-virus-1280x720.jpg")
 ```
 
-## Data Description
+## 📕 Data Description 
 
 Two data sets are used in a brief overview of the COVID-19 situation in Nigeria, one on COVID-19 cases and vaccination, and the other on the number of vaccines obtained in Nigeria.
 
@@ -98,11 +108,11 @@ kable(cbind(variables2, description2),
   kable_styling(fixed_thead = T) %>% 
   kable_paper("striped") %>%
   row_spec(0, bold = T, color ="#85CEDA", background = my_colors, align = "c") %>%
-  column_spec(2, italic = T)
+  column_spec(2, italic = T) 
 ```
 
 
-## Information on a global scale {.tabset .tabset-fade .tabset-pills} 
+## 🌏 Information on a global scale 
 
 ### Percentage of the vaccinated population
 
@@ -161,18 +171,18 @@ As of September 3, 2021, the percentage of Nigerian vaccinated population is 2.3
 
 ### Source of vaccines
 
-```{r vaccines, tab.cap='Sources of Vaccines received by Nigeria and their quantities'}
+```{r vaccines}
 source %>% select(!c(Source.Url, NewPipeline, Date))%>%
   mutate(Doses = as.numeric(gsub(",", "", Doses)))%>%
   arrange(Vaccine)%>%
-  kable()%>%kable_styling(fixed_thead = T,full_width = F, position = "center") %>% 
+  kable(caption = "**Sources of Vaccines received by Nigeria and their quantities**")%>%kable_styling(fixed_thead = T,full_width = F, position = "center",) %>% 
   kable_paper(c("striped", "hover")) %>%
   row_spec(0, bold = T,color ="#85CEDA", background = my_colors, align = "c")
 ```
 
-As shown in the table above, almost all vaccines received in Nigeria come from other countries. The government purchased 300,000 doses of AstraZeneca, but for Nigeria, which has a large population, the number of vaccines does not meet the basic requirements.
+As shown in the table above, almost all vaccines received in Nigeria come from other countries. The government purchases 300,000 doses of AstraZeneca, but for Nigeria, which has a large population, the number of vaccines does not meet the basic requirements.
 
-## The impact of vaccines on the epidemic
+## 🌡 The impact of vaccines on the epidemic ️
 
 ### Situtation on new cases and new deadths
 
@@ -210,10 +220,15 @@ p2 <- vaccination %>%
     scale_x_date(date_breaks = "months" , date_labels = "%b-%y") +
     my_theme + theme(axis.title.x = element_blank(),legend.position = "none") +
     labs(title = "Reported vaccinations in Time", subtitle = "2021", y = "Frequency")
-ggplotly(p2)
+
+vaccination_num <- p2 + 
+  transition_reveal(date)+
+  view_follow(fixed_y = TRUE)
+animate(vaccination_num, fps = 30, duration = 10, end_pause = 60)
+anim_save("images/p2.gif")
 ```
 
-According to the number of new cases and the number of deaths from Figures \@ref(fig:cases), it can be seen that the number has dropped significantly after the start of vaccination in March 2021 (Figure \@ref(fig:vaccinations)). The rise in July and August was also due to the shortage of vaccines, but after the vaccines continued to be supplied, their numbers fell again.
+According to the number of new cases and the number of deaths from Figures \@ref(fig:cases), it can be seen that the number has dropped significantly after the start of vaccination in March 2021 (Figure \@ref(fig:vaccinations)). The rise in July and August is also due to the shortage of vaccines, but after the vaccines continue to be supplied, their numbers fall again.
 
 ### Situtation on reproduce rate
 
@@ -245,13 +260,13 @@ ggplotly(rate)
 
 ```
 
-The reproduce rate is compared with the initial data (Figure \@ref(fig:reproduce) . It can be seen that from the control of the epidemic to the beginning of the vaccination, these measures have led to a decline in the infection rate. However, due to the limited number of vaccines, and the mutation of the virus, the vaccine effect has been reduced, resulting in no significant drop in the infection rate.
+The reproduce rate is compared with the initial data (1.25) in the Figure \@ref(fig:reproduce) . It can be seen that from the control of the epidemic to the beginning of the vaccination, these measures have led to a decline in the infection rate. However, due to the limited number of vaccines, and the mutation of the virus, the vaccine effect has been reduced, resulting in no significant drop in the infection rate.
 
 
-## Conclusion
+## 🔖 Conclusion 
 
 As a front reporter, I hope to report the real situation in Nigeria so that the world can focus more on this barren country, and hope that other powerful countries can help these countries more. The elimination of the epidemic does not depend on how quickly the powerful countries can control the epidemic, but on how quickly these weak countries can overcome the difficulties (@liang2020handbook). I hope that major countries can provide these countries with more economic, technological, and material support.
 
 
-*R packages used for the analysis are: @plotly, @tidyverse, @highcharter, @ggplot2, @kableExtra*
+*R packages used for the analysis are: @plotly, @tidyverse, @highcharter, @ggplot2, @kableExtra, @gganimate*
 
