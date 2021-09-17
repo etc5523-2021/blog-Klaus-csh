@@ -4,7 +4,7 @@ description: |
   Vaccines are urgent for Nigeria.
 author:
   - name: Shaohu Chen
-    url: https://example.com/norajones
+    url: https://etc5523-2021.github.io/blog-Klaus-csh/posts/2021-09-08-covid-19-vaccination-in-nigeria/
 date: 08-30-2021
 output:
   distill::distill_article:

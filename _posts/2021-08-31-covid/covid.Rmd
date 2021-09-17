@@ -4,7 +4,7 @@ description: |
   The impact of the vaccine on the number of people infected.
 author:
   - name: Shaohu Chen
-    url: https://example.com/norajones
+    url: https://etc5523-2021.github.io/blog-Klaus-csh/posts/2021-08-31-covid/
 date: 08-31-2021
 output:
   distill::distill_article:

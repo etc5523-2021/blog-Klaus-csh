@@ -4,7 +4,7 @@ description: |
   This is an article about the situation of the new coronavirus in different countries
 author:
   - name: Shaohu Chen 
-    url: https://example.com/norajones
+    url: https://etc5523-2021.github.io/blog-Klaus-csh/
 date: 09-01-2021
 output:
   distill::distill_article:
